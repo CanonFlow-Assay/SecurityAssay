@@ -1,0 +1,1 @@
+{"schema":"security-assay-inputs/0.1","inputs":[{"path":"App.cs","kind":"source"},{"path":"packages.lock.json","kind":"nuget-lock"}]}

@@ -1,0 +1,18 @@
+{
+  "profile": "native",
+  "release": {
+    "allowPreviewToolchain": true,
+    "requiredTargetFrameworks": ["net11.0"],
+    "requiredRules": ["CSAI0001", "CSAI0002", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAP0001"],
+    "tests": [{"input":"tests/SecurityAssay.Tests/SecurityAssay.Tests.csproj","configuration":"Release","noBuild":true,"minimumExpectedTests":100}]
+  },
+  "boundaries": {
+    "coreProjects": ["src/CanonFlow.Evidence/CanonFlow.Evidence.csproj"],
+    "shellProjects": ["src/SecurityAssay/SecurityAssay.csproj", "tests/SecurityAssay.Tests/SecurityAssay.Tests.csproj"],
+    "coreNamespaces": ["CanonFlow.Evidence", "CanonFlow.Security.Domain"],
+    "shellNamespaces": ["CanonFlow.Security.Adapters", "SecurityAssay.Tests"]
+  },
+  "representations": {"resultTypes":[],"optionTypes":[],"closedTypes":[]},
+  "domainPrimitives": {},
+  "suppressions": []
+}

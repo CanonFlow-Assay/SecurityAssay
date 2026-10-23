@@ -1,0 +1,6 @@
+<Project>
+  <Target Name="RequirePinnedNativeToolchain" BeforeTargets="PrepareForBuild;CollectPackageReferences">
+    <Error Condition="'$(NETCoreSdkVersion)' != '11.0.100-rc.1.26425.128' or '$(TargetFramework)' != 'net11.0' or '$(TargetFrameworks)' != '' or '$(LangVersion)' != 'preview' or '$(Nullable)' != 'enable' or '$(TreatWarningsAsErrors)' != 'true'"
+           Code="SECURITYASSAY-NATIVE-PIN-REQUIRED" Text="Exact .NET 11 RC1 SDK, net11.0, preview, nullable and warnings-as-errors are mandatory." />
+  </Target>
+</Project>

@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/CanonFlow.Evidence/CanonFlow.Evidence.csproj" />
+  <Project Path="src/SecurityAssay/SecurityAssay.csproj" />
+  <Project Path="tests/SecurityAssay.Tests/SecurityAssay.Tests.csproj" />
+</Solution>

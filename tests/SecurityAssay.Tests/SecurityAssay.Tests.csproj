@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><IsTestProject>true</IsTestProject><UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner><IsPackable>false</IsPackable></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/SecurityAssay/SecurityAssay.csproj" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" />
+  </ItemGroup>
+</Project>

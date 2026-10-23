@@ -1,0 +1,1 @@
+{"schema":"security-assay-inputs/0.1","inputs":[{"path":"App.js","kind":"source"},{"path":"package.json","kind":"config"},{"path":"package-lock.json","kind":"npm-lock"}]}

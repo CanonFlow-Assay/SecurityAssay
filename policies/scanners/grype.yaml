@@ -1,0 +1,9 @@
+check-for-app-update: false
+db:
+  cache-dir: /db
+  auto-update: false
+  validate-age: false
+  validate-by-hash-on-start: true
+external-sources:
+  enable: false
+ignore: []

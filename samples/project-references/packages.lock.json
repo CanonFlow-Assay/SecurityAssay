@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net11.0": {
+      "Newtonsoft.Json": {
+        "type": "Direct",
+        "requested": "[13.0.4, )",
+        "resolved": "13.0.4",
+        "contentHash": "bR+v+E/yJ6g7GV2uXw2OrUSjYYfjLkOLC8JD4kCS23msLapnKtdJPBJA75fwHH++ErIffeIqzYITLxAur4KAXA=="
+      },
+      "Fixture.Domain": {
+        "type": "Project",
+        "dependencies": {}
+      }
+    }
+  }
+}

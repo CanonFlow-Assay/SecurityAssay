@@ -1,0 +1,4 @@
+check-for-app-update: false
+default-catalogers:
+  - dotnet-packages-lock-cataloger
+  - javascript-lock-cataloger
