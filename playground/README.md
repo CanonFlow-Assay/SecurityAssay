@@ -29,3 +29,6 @@ Use the exact `asOf` from the receipt if reviewing that evaluation. A different 
 Eligible local advice is `RepairTools`, `ReviewFindings`, `CollectEvidence` or `ReviewScope`; zero budget yields `BudgetExhausted`. `ReviewScope` asks for human examination of the bounded M0 scope; it is not a release grant. This command inspects evidence rather than re-running scanners or independently attesting tool/database bytes.
 
 Requirements and expected controls are in [requirements.json](requirements.json). Existing scanner qualification and historical raw evidence remain separate.
+
+See [phase-1 portable convergence](CONVERGENCE.md) for the receipt-ingress
+candidate and the security scope exclusions that remain in force.
