@@ -67,6 +67,16 @@ scanner heuristics/default false-positive processing still apply. Every emitted
 finding is retained and mapped; unrecognized mappings/severity prevent Pass.
 
 See [M0 contract](docs/M0-CONTRACT.md), [evidence model](docs/EVIDENCE.md) and
-[third-party notices](THIRD_PARTY_NOTICES.md). This undertaking stops at local
-Forgejo draft review. Current qualification results are recorded separately;
+[third-party notices](THIRD_PARTY_NOTICES.md). The original M0 undertaking stopped at local Forgejo draft review. On 30 October
+2026 the owner separately authorized source squash/publication. This does not
+authorize a package release, scanner/DB publication or broader security claims.
+Current qualification results are recorded separately;
 documentation alone never grants verification authority.
+
+## Evidence playground and investigation advice
+
+See the [local playground](playground/README.md) for the current-time fixture workflow and native-union offline advice. The original scanner verdict remains embedded and unchanged; changed receipt/input/time bindings require context.
+
+## Current-time Astra qualification
+
+This isolated phase-2 candidate refreshes only the database/toolchain pins in a separate bundle, preserves the original scanner binaries and admits no new checks. The qualification runner records an explicit UTC evaluation time. See [provisioning](docs/PROVISIONING.md#astra-current-time-candidate) for reproducible invocation and the preserved phase-1 boundary.

@@ -9,8 +9,12 @@ namespace CanonFlow.Security.Adapters;
 
 public static class Qualification
 {
-    public static async Task<JsonNode> Run(string repository, string bundle, string engine, string output)
+    public static Task<JsonNode> Run(string repository, string bundle, string engine, string output)
+        => Run(repository, bundle, engine, DateTimeOffset.UtcNow, output);
+
+    public static async Task<JsonNode> Run(string repository, string bundle, string engine, DateTimeOffset asOf, string output)
     {
+        if (asOf.Offset != TimeSpan.Zero) throw new ArgumentException("Qualification requires an explicit UTC evaluation instant.");
         repository = Path.GetFullPath(repository); bundle = Path.GetFullPath(bundle); engine = Path.GetFullPath(engine); output = Path.GetFullPath(output);
         if (!output.StartsWith(Path.Combine(repository, "artifacts") + Path.DirectorySeparatorChar, StringComparison.Ordinal) || Directory.Exists(output))
             throw new InvalidDataException("Choose a fresh ignored artifacts qualification directory.");
@@ -19,12 +23,11 @@ public static class Qualification
         if ((await Git("status", "--porcelain")).Length != 0) throw new InvalidDataException("Qualification requires exact clean committed source.");
         var assembly = typeof(Qualification).Assembly.Location; var initialBinary = JsonIO.ShaFile(assembly); var engineHash = JsonIO.ShaFile(engine);
         var gates = new JsonArray(); var report = JsonIO.Node(new { schema = "security-assay-qualification/0.1", executionStatus = "running", sourceCommit = head,
-            evaluatorSha256 = initialBinary, engineSha256 = engineHash, gates, providerRequests = 0, publication = "Local Forgejo draft review only", authority = "Executed local M0 evidence; no human/production/ASVS certification claim." });
+            evaluatorSha256 = initialBinary, engineSha256 = engineHash, asOfUtc = asOf.ToString("O", CultureInfo.InvariantCulture), gates, providerRequests = 0, publication = "Local Forgejo draft review only", authority = "Executed local M0 evidence; no human/production/ASVS certification claim." });
         report["gates"] = gates;
         var reportPath = Path.Combine(output, "qualification.json"); JsonIO.Write(reportPath, report);
         var catalog = Path.Combine(repository, "standards/asvs-5.0.0/catalog.json"); var chainFile = Path.Combine(repository, "policies/toolchain.lock.json");
         var policyFile = Path.Combine(repository, "policies/m0.json"); var cleanRoot = Path.Combine(repository, "samples/clean");
-        var asOf = new DateTimeOffset(2026, 10, 23, 0, 0, 0, TimeSpan.Zero);
         try
         {
             await Command("locked-restore", ["dotnet", "restore", "SecurityAssay.slnx", "--locked-mode"]);
@@ -51,7 +54,11 @@ public static class Qualification
                 !JsonIO.Array(projectInput, "components").Any(c => string.Equals(c?["purl"]?.GetValue<string>(), "pkg:nuget/Fixture.Domain", StringComparison.OrdinalIgnoreCase)), "First-party evidence/projection was not retained separately.");
             using (var secret = new Scratch("security-assay-synthetic-secret-"))
             {
-                CopyFixture(cleanRoot, secret.Path); var token = Convert.ToHexStringLower(RandomNumberGenerator.GetBytes(24));
+                CopyFixture(cleanRoot, secret.Path);
+                // A fake dedicated-rule specimen avoids random hex values falling below
+                // generic-api-key entropy or matching its approved upstream stopwords.
+                // Construct it in parts so qualification source is not itself a fixture.
+                var token = string.Concat("ghp_", "0123456789abcdef", "0123456789abcdef", "0123");
                 File.WriteAllText(Path.Combine(secret.Path, "App.cs"), "public static class Example { public const string api_key = \"" + token + "\"; } // gitleaks:allow\n");
                 var dirty = await Scan("synthetic-secret", secret.Path, policyFile, bundle, asOf, "Fail");
                 Check(dirty.Findings.Any(f => f.Tool == "gitleaks" && !f.Asvs.IsDefaultOrEmpty), "Synthetic secret was missed or inline suppression was honored.");

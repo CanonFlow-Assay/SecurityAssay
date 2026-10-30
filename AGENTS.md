@@ -30,3 +30,11 @@ binary/database/config tampering, missing tool/DB, stale DB, unrecognized findin
 invalid scope, undeclared files, malformed reports, timeout and determinism.
 Source-bound qualification needs a clean committed candidate. Never relabel
 historical evidence or synthetic adapters as real scans.
+
+## Source promotion authorization — 30 October 2026
+
+The owner explicitly requested squash/push of the remaining assay repositories.
+That instruction authorizes this source candidate through Forgejo and GitHub,
+superseding the historical local-only promotion limit above for this undertaking.
+Package/tag releases, expanded rule authority and human acceptance are separate.
+No sub-agent work is authorized for SecurityAssay.

@@ -1,0 +1,37 @@
+{
+  "schema": "security-playground-requirements/0.1",
+  "requirements": [
+    {
+      "id": "SEC-PG-01",
+      "text": "Preserve the original four-state scan verdict and embed the original receipt in advice."
+    },
+    {
+      "id": "SEC-PG-02",
+      "text": "Missing, changed or tampered source/evidence/time requires fresh context before investigation."
+    },
+    {
+      "id": "SEC-PG-03",
+      "text": "An incomplete current-time database evaluation must remain incomplete and must not invoke scanners."
+    },
+    {
+      "id": "SEC-PG-04",
+      "text": "Only bounded offline investigation advice is produced; no scanner command, waiver, inference or automatic approval."
+    }
+  ],
+  "controls": [
+    "missing receipt",
+    "checksum mismatch",
+    "changed SARIF",
+    "changed declared source",
+    "changed evaluation time",
+    "invalid/default facts",
+    "empty budget",
+    "tool failure before findings",
+    "retained original incomplete receipt"
+  ],
+  "limits": [
+    "Unit advice routing controls are not real scanner results.",
+    "Current-time stale database stops before scanner execution.",
+    "No ASVS certification or application release approval."
+  ]
+}

@@ -2,8 +2,8 @@
 
 Evaluation and provisioning are separate operations. The committed toolchain lock
 pins Linux/amd64 Gitleaks 8.30.1, Syft 1.55.0, Grype 0.121.0, their binary/config
-hashes, the immutable local Docker image ID, and every DB file. The current DB is
-schema v6.1.10 built 2026-10-22T18:51:21Z. It is about 3.1 GiB and intentionally
+hashes, the immutable local Docker image ID, and every DB file. This phase-2 candidate pins a separate schema v6.1.10 database built
+2026-10-28T06:23:30Z; the phase-1 checkout and 22 October bundle remain preserved. It is about 3.1 GiB and intentionally
 not committed to Git. The pinned ASVS catalog and its license are in `standards/`.
 
 ## Provision a fresh bundle
@@ -63,3 +63,18 @@ Primary sources: [Gitleaks](https://github.com/gitleaks/gitleaks/releases/tag/v8
 [Syft](https://github.com/anchore/syft/releases/tag/v1.55.0),
 [Grype](https://github.com/anchore/grype/releases/tag/v0.121.0),
 [database documentation](https://oss.anchore.com/docs/guides/vulnerability/database/).
+
+## Astra current-time candidate
+
+The isolated `SecurityAssay-Astra-Phase2` branch uses the unchanged approved scanner versions and fresh database bytes under `~/.cache/securityassay-astra-20261029`. The old `~/.cache/securityassay-m0` bundle was not modified. Online database provisioning and pin generation are separate from offline evaluation.
+
+Qualification accepts an explicit ISO UTC evaluation instant, recorded in its journal:
+
+```sh
+dotnet src/SecurityAssay/bin/Release/net11.0/SecurityAssay.dll qualify \
+  /absolute/SecurityAssay-Astra-Phase2 /absolute/approved-bundle \
+  /absolute/native-net11-rc1/cs-assay.dll 2026-10-29T06:45:00Z \
+  /absolute/SecurityAssay-Astra-Phase2/artifacts/current-qualification
+```
+
+Omitting the instant uses current UTC; it no longer replays a hardcoded 23 October time. Historical qualification records retain their old source/policy/time identities. Current-time Pass remains scoped M0 evidence and grants no human or production approval.
