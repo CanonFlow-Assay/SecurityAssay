@@ -4,7 +4,7 @@ Read `/home/arun/Developer/AGENTS.md` in every session. This new undertaking is
 authorized through local Forgejo draft review only. Never read credential files,
 merge PRs, write GitHub, publish packages or imply human approval.
 
-Implement in C# with exact .NET 11 RC1 from global.json, preview language,
+Implement in C# with exact .NET 11 from global.json, C# 15,
 nullable and warnings-as-errors. Native unions express closed domain outcomes.
 Keep pure evidence/policy decisions separate from scanner/process/file adapters.
 No Python source or interpreter dependency. No sub-agent work is authorized.

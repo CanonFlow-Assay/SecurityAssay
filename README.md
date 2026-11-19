@@ -9,8 +9,8 @@ certification or proof of an entire ASVS requirement.
 
 `CanonFlow.Evidence` supplies pure native-union decisions and scope/policy/check
 bindings. SecurityAssay keeps processes, files, package metadata parsing and tool
-normalization in adapters. Source targets the exact .NET 11 RC1 SDK in global.json,
-`net11.0`, preview C#, nullable analysis and warnings-as-errors. No Python tooling.
+normalization in adapters. Source targets the exact .NET 11 SDK in global.json,
+`net11.0`, C# 15, nullable analysis and warnings-as-errors. No Python tooling.
 
 ## Build and tests
 
