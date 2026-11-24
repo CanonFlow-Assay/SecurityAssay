@@ -10,3 +10,11 @@ unknown-version or stale evidence must remain `ContextRequired` before advice
 can inspect it. Run only the exact local M0 toolchain and declared inputs. Do
 not add ambient configuration, webhooks, network calls, automatic remediation or
 claims of broader security/ASVS assurance.
+
+## Phase 2 specimen (`ReceiptReview` ingress & freshness controls)
+
+Run the receipt-ingress, unknown-schema, malformed-JSON, and stale-input controls on `.NET SDK 11.0.100`:
+
+```sh
+dotnet test SecurityAssay.slnx -c Release
+```

@@ -69,6 +69,8 @@ public sealed class AssistanceTests
     [InlineData("missing-arrays", "ContextRequired")]
     [InlineData("profile", "ContextRequired")]
     [InlineData("empty-limits", "ContextRequired")]
+    [InlineData("unknown-schema", "ContextRequired")]
+    [InlineData("malformed-json", "ContextRequired")]
     public async Task RealIncompleteEvaluationRetainsItsVerdictAndRefusesChangedInputs(string change, string expected)
     {
         var repository = AppContext.BaseDirectory;
@@ -95,21 +97,35 @@ public sealed class AssistanceTests
             if (change == "source") File.AppendAllText(Path.Combine(root, "App.cs"), "\n// changed\n");
             if (change == "artifact") File.AppendAllText(Path.Combine(output, "findings.sarif"), " ");
             if (change == "digest") File.WriteAllText(Path.Combine(output, "receipt.sha256"), new string('0', 64) + "  receipt.json\n");
-            if (change is "missing-arrays" or "profile" or "empty-limits")
+            if (change is "missing-arrays" or "profile" or "empty-limits" or "unknown-schema")
             {
                 var file = Path.Combine(output, "receipt.json");
                 var raw = CanonFlow.Security.Adapters.JsonIO.Read(file).AsObject();
                 if (change == "missing-arrays") { raw.Remove("findings"); raw.Remove("tools"); raw.Remove("limits"); }
                 if (change == "profile") raw.Remove("profile");
                 if (change == "empty-limits") raw["limits"] = new System.Text.Json.Nodes.JsonArray();
+                if (change == "unknown-schema") raw["schema"] = "security-assay-receipt/99.0";
                 CanonFlow.Security.Adapters.JsonIO.Write(file, raw);
+                File.WriteAllText(Path.Combine(output, "receipt.sha256"), CanonFlow.Security.Adapters.JsonIO.ShaFile(file) + "  receipt.json\n");
+            }
+            if (change == "malformed-json")
+            {
+                var file = Path.Combine(output, "receipt.json");
+                File.WriteAllText(file, "{\"schema\":");
                 File.WriteAllText(Path.Combine(output, "receipt.sha256"), CanonFlow.Security.Adapters.JsonIO.ShaFile(file) + "  receipt.json\n");
             }
             var review = CanonFlow.Security.Adapters.ReceiptReview.Run(Path.Combine(output, "receipt.json"), root, manifest, policy,
                 chain, catalog, change == "offset" ? receipt.AsOf : (change == "time" ? time.AddDays(1) : time).UtcDateTime.ToString("O", System.Globalization.CultureInfo.InvariantCulture), 1);
             Assert.Equal(expected, review["reviewState"]!.GetValue<string>());
-            Assert.Equal("Inconclusive", review["originalVerdict"]!.GetValue<string>());
-            Assert.Equal("Inconclusive", review["receipt"]!["verdict"]!.GetValue<string>());
+            if (change == "malformed-json")
+            {
+                Assert.Equal("NotAvailable", review["originalVerdict"]!.GetValue<string>());
+            }
+            else
+            {
+                Assert.Equal("Inconclusive", review["originalVerdict"]!.GetValue<string>());
+                Assert.Equal("Inconclusive", review["receipt"]!["verdict"]!.GetValue<string>());
+            }
         }
         finally { Directory.Delete(scratch, recursive: true); }
     }
