@@ -80,3 +80,10 @@ See the [local playground](playground/README.md) for the current-time fixture wo
 ## Current-time Astra qualification
 
 This isolated phase-2 candidate refreshes only the database/toolchain pins in a separate bundle, preserves the original scanner binaries and admits no new checks. The qualification runner records an explicit UTC evaluation time. See [provisioning](docs/PROVISIONING.md#astra-current-time-candidate) for reproducible invocation and the preserved phase-1 boundary.
+
+## Estate evidence
+
+The estate source lane restores, builds and runs the registered .NET
+tests. Use the pinned scanner bundle, inputs and evaluation instant for
+a separate offline M0 receipt. The full-release policy still requires the
+application, deployment and provenance controls described above.
